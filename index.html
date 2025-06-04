@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta info & page title -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rain Water Collection Project</title>
+
+  <!-- Link to CSS for styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Page Header -->
+  <header>
+    <h1>Rain Water Collection Project</h1>
+    <p>Repurposing rain for the South High Greenhouse</p>
+
+    <!-- Navigation Links -->
+    <nav>
+      <a href="#how">How It Works</a>
+      <a href="#data">Data</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <!-- How the system works -->
+  <section id="how">
+    <h2>How It Works</h2>
+    <p>We rerouted a rain gutter to funnel water into a barrel, then used a drip irrigation system to water a garden with it.</p>
+
+    <!-- Diagram Image (replace with your actual diagram) -->
+    <img src="images/system-diagram.png" alt="System Diagram" />
+  </section>
+
+  <!-- Data section with a graph -->
+  <section id="data">
+    <h2>Our Data</h2>
+    <!-- This is where the chart will appear -->
+    <canvas id="rainChart" width="400" height="200"></canvas>
+  </section>
+
+  <!-- About the project team -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We’re two students working on a passion project to bring sustainability to our school garden. This site shows our progress and results.</p>
+  </section>
+
+  <!-- Page Footer -->
+  <footer>
+    <p>For any questions contact _____</p>
+  </footer>
+
+  <!-- Include Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Link to your JavaScript file -->
+  <script src="script.js"></script>
+
+</body>
+</html>

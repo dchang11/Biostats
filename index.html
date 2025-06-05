@@ -25,6 +25,22 @@
     <option value="exponential">Exponential</option>
   </select>
 
+  <h3>Or Enter Data Manually:</h3>
+  <table id="dataTable">
+    <thead>
+      <tr><th>X</th><th>Y</th></tr>
+    </thead>
+    <tbody>
+      <!-- Start with two rows -->
+      <tr><td><input type="number" /></td><td><input type="number" /></td></tr>
+      <tr><td><input type="number" /></td><td><input type="number" /></td></tr>
+    </tbody>
+  </table>
+
+<!-- Buttons to add rows and plot -->
+<button onclick="addRow()">+ Add Row</button>
+<button onclick="plotManualData()">Plot Manual Data</button>
+  
   <!-- Download button for saving graph as image -->
   <button onclick="downloadGraph()">Download Graph</button>
 

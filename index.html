@@ -6,9 +6,18 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- For plotting graphs -->
   <script src="https://unpkg.com/simple-statistics@7.8.3/dist/simple-statistics.min.js"></script> <!-- For regression calculations -->
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    input, select, button { margin: 10px 0; }
-    #plot { width: 100%; max-width: 800px; height: 500px; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    input, select, button {
+      margin: 10px 0;
+    }
+    #plot {
+      width: 100%;
+      max-width: 800px;
+      height: 500px;
+    }
   </style>
 </head>
 <body>
@@ -31,49 +40,44 @@
       <tr><th>X</th><th>Y</th></tr>
     </thead>
     <tbody>
-      <!-- Start with two rows -->
       <tr><td><input type="number" /></td><td><input type="number" /></td></tr>
       <tr><td><input type="number" /></td><td><input type="number" /></td></tr>
     </tbody>
   </table>
 
-<!-- Buttons to add rows and plot -->
-<button onclick="addRow()">+ Add Row</button>
-<button onclick="plotManualData()">Plot Manual Data</button>
-  
-  <!-- Download button for saving graph as image -->
+  <!-- Buttons -->
+  <button onclick="addRow()">+ Add Row</button>
+  <button onclick="plotManualData()">Plot Manual Data</button>
   <button onclick="downloadGraph()">Download Graph</button>
 
-  <!-- Where the graph will be displayed -->
+  <!-- Graph output -->
   <div id="plot"></div>
 
   <script>
-    // When a CSV file is selected...
+    // CSV file upload handler
     document.getElementById('fileInput').addEventListener('change', function(event) {
       const file = event.target.files[0];
       const reader = new FileReader();
 
-      // After file is loaded, parse the CSV and plot it
       reader.onload = function(e) {
         const rows = e.target.result.trim().split('\n');
         const x = [], y = [];
 
-        // Assume first row is headers, skip it
+        // Skip headers
         for (let i = 1; i < rows.length; i++) {
           const [xVal, yVal] = rows[i].split(',').map(Number);
           x.push(xVal);
           y.push(yVal);
         }
 
-        // Get selected regression type
         const regressionType = document.getElementById('regression').value;
         plotData(x, y, regressionType);
       };
 
-      reader.readAsText(file); // Read CSV file as plain text
+      reader.readAsText(file);
     });
 
-    // Main function to plot data and regression
+    // Main graphing logic
     function plotData(x, y, regressionType) {
       const trace = {
         x: x,
@@ -85,12 +89,12 @@
 
       const data = [trace];
 
-      // Add regression line if selected
       if (regressionType === 'linear') {
         const lr = ss.linearRegression(x.map((xi, i) => [xi, y[i]]));
         const line = ss.linearRegressionLine(lr);
-        const xLine = [...x].sort((a, b) => a - b); // Sorted x for smooth line
+        const xLine = [...x].sort((a, b) => a - b);
         const yLine = xLine.map(line);
+
         data.push({
           x: xLine,
           y: yLine,
@@ -99,12 +103,12 @@
         });
 
       } else if (regressionType === 'exponential') {
-        // Fit to y = a * e^(b * x)
         const logY = y.map(Math.log);
         const lr = ss.linearRegression(x.map((xi, i) => [xi, logY[i]]));
         const a = Math.exp(lr.b), b = lr.m;
         const xLine = [...x].sort((a, b) => a - b);
         const yLine = xLine.map(xi => a * Math.exp(b * xi));
+
         data.push({
           x: xLine,
           y: yLine,
@@ -112,4 +116,17 @@
           name: 'Exponential Regression'
         });
       }
+
+      Plotly.newPlot('plot', data);
+    }
+
+    // Save graph as PNG
+    function downloadGraph() {
+      Plotly.downloadImage('plot', {format: 'png', filename: 'biostatistics-graph'});
+    }
+  </script>
+
+  <!-- External script with manual data functions -->
   <script src="js/manualData.js"></script>
+</body>
+</html>
